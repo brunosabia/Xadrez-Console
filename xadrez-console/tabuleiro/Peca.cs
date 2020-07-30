@@ -15,6 +15,8 @@ namespace tabuleiro
 
         public Tabuleiro tab { get; protected set; }
 
+
+        //construtor base
         public Peca( Tabuleiro tab, Cor cor)
         {
             this.posicao = null;
