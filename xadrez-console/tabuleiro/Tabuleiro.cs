@@ -79,7 +79,7 @@ namespace tabuleiro
         //método usado para verificar se a posição do tabuleiro é valida
         public bool posicaoValida(Posicao pos)
         {
-            if(pos.linha < 0 || pos.linha >= linhas || pos.coluna >= colunas)
+            if(pos.linha < 0 || pos.linha >= linhas || pos.coluna < 0 || pos.coluna >= colunas)
             {
                 return false;
             }

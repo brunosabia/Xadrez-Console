@@ -5,7 +5,7 @@ using tabuleiro;
 
 namespace tabuleiro
 {
-    class Peca
+    abstract class Peca
     {
         public Posicao posicao { get; set; }
 
@@ -30,5 +30,9 @@ namespace tabuleiro
         {
             qteMovimentos++;
         }
+
+        //método abstrato que sera implementado em cada uma das subclasses com as devidas posicoes que a peca poderá ocupar
+        public abstract bool[,] movimentosPossiveis();
+        
     }
 }
