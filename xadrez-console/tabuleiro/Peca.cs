@@ -31,6 +31,33 @@ namespace tabuleiro
             qteMovimentos++;
         }
 
+        //esse metodo vai pegar a matriz bool dos movimentos possiveis e verificar se existe pelo menos UM movimento possível para ser realizado.
+        public bool existeMovimentosPossiveis()
+        {
+            bool[,] mat = movimentosPossiveis();
+
+            for (int i = 0; i < tab.linhas; i++)
+            {
+                for (int j = 0; j < tab.colunas; j++)
+                {
+                    if (mat[i, j])
+                    {
+                        return true;
+                    }
+
+                }
+
+            }
+            return false;
+        }
+
+        public bool podeMoverPara(Posicao pos)
+        {
+            return movimentosPossiveis()[pos.linha, pos.coluna];
+
+        }
+
+
         //método abstrato que sera implementado em cada uma das subclasses com as devidas posicoes que a peca poderá ocupar
         public abstract bool[,] movimentosPossiveis();
         
