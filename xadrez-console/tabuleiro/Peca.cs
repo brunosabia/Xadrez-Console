@@ -31,6 +31,11 @@ namespace tabuleiro
             qteMovimentos++;
         }
 
+        public void decrementarQteMovimentos()
+        {
+            qteMovimentos--;
+        }
+
         //esse metodo vai pegar a matriz bool dos movimentos possiveis e verificar se existe pelo menos UM movimento possível para ser realizado.
         public bool existeMovimentosPossiveis()
         {
