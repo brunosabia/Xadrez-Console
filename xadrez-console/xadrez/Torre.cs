@@ -33,16 +33,17 @@ namespace xadrez
             //selecionar a posição ACIMA da peça
             pos.definirValores(posicao.linha - 1, posicao.coluna);
             //enquanto a posição estiver vazia e for valida, marcar a posição como livre(true)
-            while(tab.posicaoValida(pos) && podeMover(pos))
+            while (tab.posicaoValida(pos) && podeMover(pos))
             {
                 mat[pos.linha, pos.coluna] = true;
-                
+
                 // caso a posição nao seja viavel, parar de tornar as posicoes true
-                if(tab.peca(pos) != null && tab.peca(pos).cor != cor){
+                if (tab.peca(pos) != null && tab.peca(pos).cor != cor)
+                {
                     break;
                 }
                 //caso a posição seja viavel, ela vai passar pelo if acima e vai subir para a linha de cima (linha - 1)
-                pos.linha -= 1; 
+                pos.linha -= 1;
 
             }
 
@@ -84,7 +85,7 @@ namespace xadrez
             }
 
             //selecionar a posição ESQUERDA
-            pos.definirValores(posicao.linha , posicao.coluna - 1);
+            pos.definirValores(posicao.linha, posicao.coluna - 1);
             //enquanto a posição estiver vazia e for valida, marcar a posição como livre(true)
             while (tab.posicaoValida(pos) && podeMover(pos))
             {

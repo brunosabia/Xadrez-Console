@@ -20,14 +20,14 @@ namespace tabuleiro
             this.colunas = colunas;
             pecas = new Peca[linhas, colunas];
         }
-        
-        
+
+
         //setar a posição da peca no tabuleiro
         public Peca peca(int linha, int coluna)
         {
             return pecas[linha, coluna];
         }
-    
+
         //sobrecarga do metodo acima recebendo apenas a posição da pessa por parametro
         public Peca peca(Posicao pos)
         {
@@ -61,7 +61,7 @@ namespace tabuleiro
         public Peca retirarPeca(Posicao pos)
         {
             //se a posicao for vazia, retornar null e seguir.
-            if(peca(pos) == null)
+            if (peca(pos) == null)
             {
                 return null;
             }
@@ -79,7 +79,7 @@ namespace tabuleiro
         //método usado para verificar se a posição do tabuleiro é valida
         public bool posicaoValida(Posicao pos)
         {
-            if(pos.linha < 0 || pos.linha >= linhas || pos.coluna < 0 || pos.coluna >= colunas)
+            if (pos.linha < 0 || pos.linha >= linhas || pos.coluna < 0 || pos.coluna >= colunas)
             {
                 return false;
             }
@@ -97,6 +97,6 @@ namespace tabuleiro
                 throw new TabuleiroException("Posição inválida!");
             }
         }
-    
+
     }
 }

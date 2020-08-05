@@ -8,7 +8,7 @@ namespace xadrez_console
     class Program
     {
         static void Main(string[] args)
-        { 
+        {
             try
             {
                 PartidaDeXadrez partida = new PartidaDeXadrez();
@@ -19,11 +19,9 @@ namespace xadrez_console
                     try
                     {
                         Console.Clear();
-                        Tela.imprimirTabuleiro(partida.tab);
-                        Console.WriteLine();
-                        Console.WriteLine("Turno: " + partida.turno);
-                        Console.WriteLine("Aguardando jogada: " + partida.jogadorAtual);
+                        Tela.imprimirPartida(partida);
 
+                        Console.WriteLine();
                         Console.Write("Origem: ");
                         Posicao origem = Tela.lerPosicaoXadrez().toPosicao();
                         partida.validarPosicaoDeOrigem(origem);
@@ -40,7 +38,8 @@ namespace xadrez_console
                         partida.validarPosicaoDeDestino(origem, destino);
 
                         partida.realizaJogada(origem, destino);
-                    }catch(TabuleiroException e)
+                    }
+                    catch (TabuleiroException e)
                     {
                         Console.WriteLine(e.Message);
                         Console.ReadLine();
@@ -49,11 +48,11 @@ namespace xadrez_console
 
                 Tela.imprimirTabuleiro(partida.tab);
             }
-            catch(TabuleiroException e)
+            catch (TabuleiroException e)
             {
                 Console.WriteLine(e.Message);
             }
-            
+
         }
     }
 }

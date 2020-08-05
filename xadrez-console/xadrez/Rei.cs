@@ -7,7 +7,7 @@ namespace xadrez
 {
     class Rei : Peca
     {
-        public Rei(Tabuleiro tab, Cor cor) : base(tab,cor)
+        public Rei(Tabuleiro tab, Cor cor) : base(tab, cor)
         {
 
         }
@@ -16,7 +16,7 @@ namespace xadrez
         private bool podeMover(Posicao pos)
         {
             Peca p = tab.peca(pos);
-            return p == null || p.cor !=  cor; 
+            return p == null || p.cor != cor;
         }
 
         public override bool[,] movimentosPossiveis()
@@ -30,7 +30,8 @@ namespace xadrez
             pos.definirValores(posicao.linha - 1, posicao.coluna);
             //SE a posição for valida(dentro do tabuleiro e maior que 0) 
             //Se a posicao destino estiver vazia ou for da cor do time oposto, a posição é valida.
-            if(tab.posicaoValida(pos) && podeMover(pos)) {
+            if (tab.posicaoValida(pos) && podeMover(pos))
+            {
                 mat[pos.linha, pos.coluna] = true;
             }
 
@@ -44,7 +45,7 @@ namespace xadrez
             }
 
             //selecionar a posição A DIREITA da peça
-            pos.definirValores(posicao.linha , posicao.coluna + 1);
+            pos.definirValores(posicao.linha, posicao.coluna + 1);
             //SE a posição for valida(dentro do tabuleiro e maior que 0) 
             //Se a posicao destino estiver vazia ou for da cor do time oposto, a posição é valida.
             if (tab.posicaoValida(pos) && podeMover(pos))
@@ -71,7 +72,7 @@ namespace xadrez
             }
 
             //selecionar a posição SUDOESTE
-            pos.definirValores(posicao.linha +1 , posicao.coluna - 1);
+            pos.definirValores(posicao.linha + 1, posicao.coluna - 1);
             //SE a posição for valida(dentro do tabuleiro e maior que 0) 
             //Se a posicao destino estiver vazia ou for da cor do time oposto, a posição é valida.
             if (tab.posicaoValida(pos) && podeMover(pos))
@@ -80,7 +81,7 @@ namespace xadrez
             }
 
             //selecionar a posição A ESQUERDA da peça
-            pos.definirValores(posicao.linha , posicao.coluna - 1);
+            pos.definirValores(posicao.linha, posicao.coluna - 1);
             //SE a posição for valida(dentro do tabuleiro e maior que 0) 
             //Se a posicao destino estiver vazia ou for da cor do time oposto, a posição é valida.
             if (tab.posicaoValida(pos) && podeMover(pos))
@@ -103,5 +104,5 @@ namespace xadrez
             return "R ";
         }
     }
-    
+
 }
