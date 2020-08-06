@@ -49,11 +49,11 @@ namespace xadrez
             return pecaCapturada;
         }
 
-        public void desfazMovimento(Posicao origem, Posicao destino,Peca pecaCapturada)
+        public void desfazMovimento(Posicao origem, Posicao destino, Peca pecaCapturada)
         {
             Peca p = tab.retirarPeca(destino);
             p.decrementarQteMovimentos();
-            if(pecaCapturada != null)
+            if (pecaCapturada != null)
             {
                 tab.colocarPeca(pecaCapturada, destino);
                 capturadas.Remove(pecaCapturada);
@@ -83,9 +83,15 @@ namespace xadrez
             {
                 xeque = false;
             }
-            turno++;
-            mudaJogador();
-
+            if (testeXequemate(adversaria(jogadorAtual)))
+            {
+                terminada = true;
+            }
+            else
+            {
+                turno++;
+                mudaJogador();
+            }
         }
 
         //metodo para Validar a posição que o usuario digita de Origem
@@ -174,6 +180,7 @@ namespace xadrez
         //metodo que coloca a peca no tabuleiro
         private void colocarPecas()
         {
+            /*
             colocarNovaPeca('c', 1, new Torre(tab, Cor.Branca));
             colocarNovaPeca('c', 2, new Torre(tab, Cor.Branca));
             colocarNovaPeca('e', 2, new Torre(tab, Cor.Branca));
@@ -188,14 +195,20 @@ namespace xadrez
             colocarNovaPeca('e', 7, new Torre(tab, Cor.Preta));
             colocarNovaPeca('e', 8, new Torre(tab, Cor.Preta));
             colocarNovaPeca('d', 8, new Rei(tab, Cor.Preta));
+            */
 
+            colocarNovaPeca('c', 1, new Torre(tab, Cor.Branca));
+            colocarNovaPeca('d', 1, new Rei(tab, Cor.Branca));
+            colocarNovaPeca('h', 7, new Torre(tab, Cor.Branca));
 
+            colocarNovaPeca('a', 8, new Rei(tab, Cor.Preta));
+            colocarNovaPeca('b', 8, new Torre(tab, Cor.Preta));
         }
 
         //Sequencia de metodos para verificar se o Rei está em Xeque
         private Cor adversaria(Cor cor)
         {
-            if(cor == Cor.Branca)
+            if (cor == Cor.Branca)
             {
                 return Cor.Preta;
             }
@@ -207,9 +220,9 @@ namespace xadrez
 
         private Peca rei(Cor cor)
         {
-            foreach(Peca x in pecasEmJogo(cor))
+            foreach (Peca x in pecasEmJogo(cor))
             {
-                if(x is Rei)
+                if (x is Rei)
                 {
                     return x;
                 }
@@ -221,7 +234,7 @@ namespace xadrez
         public bool estaEmXeque(Cor cor)
         {
             Peca R = rei(cor);
-            if(R == null)
+            if (R == null)
             {
                 throw new TabuleiroException("Tabuleiro sem o Rei da cor " + cor + "!");
             }
@@ -234,6 +247,53 @@ namespace xadrez
                 }
             }
             return false;
+        }
+
+        public bool testeXequemate(Cor cor)
+        {
+            //não é possivel estar em xequemate sem estar em xeque.
+            if (!estaEmXeque(cor))
+            {
+                return false;
+            }
+            //para cada peca em jogo da cor recebida do param.
+            foreach (Peca x in pecasEmJogo(cor))
+            {
+                //salvar os movimentos possiveis das pecas em jogo
+                bool[,] mat = x.movimentosPossiveis();
+
+                //varrer a matriz de movimentos possíveis
+                for (int i = 0; i < tab.linhas; i++)
+                {
+                    for (int j = 0; j < tab.colunas; j++)
+                    {
+                        //se a posição for um destino válido
+                        if (mat[i, j] == true)
+                        {
+                            //armazena a posicao de origem da peca
+                            Posicao origem = x.posicao;
+                            //marcar a posicao valida;
+                            Posicao destino = new Posicao(i, j);
+                            //leva a peca selecionada "x" até a posição do movimento encontrada
+                            Peca pecaCapturada = executaMovimento(origem, destino);
+                            //verifica se após movimentar a peca encontrada até a posição do movimento possivel dela ainda estaria em xeque
+                            bool testeXeque = estaEmXeque(cor);
+                            //desfaz o movimento
+                            desfazMovimento(origem, destino, pecaCapturada);
+
+                            //se em alguma situação o testeXeque retornar falso, sair do loop, pois existe uma possibilidade de sair do xeque
+                            if (!testeXeque)
+                            {
+                                return false;
+                            }
+
+                        }
+
+                    }
+                }
+
+            }
+            return true;
         }
 
     }
