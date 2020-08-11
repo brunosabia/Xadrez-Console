@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Text;
 using tabuleiro;
+using xadrez;
 
 namespace xadrez_console.xadrez
 {
     class Peao : Peca
     {
+        private PartidaDeXadrez partida;
         //Constructor
-        public Peao(Tabuleiro tab, Cor cor) : base(tab, cor)
+        public Peao(Tabuleiro tab, Cor cor, PartidaDeXadrez partida) : base(tab, cor)
         {
-
+            this.partida = partida;
         }
 
 
@@ -62,6 +64,18 @@ namespace xadrez_console.xadrez
                 if (tab.posicaoValida(pos) && existeInimigo(pos))
                 {
                     mat[pos.linha, pos.coluna] = true;
+                }
+                //JOGADA ESPECIAL en Passant
+
+                if(posicao.linha == 3)
+                {
+                    Posicao esquerda = new Posicao(posicao.linha, posicao.coluna - 1);
+                    if (tab.posicaoValida(esquerda) && existeInimigo(esquerda) && tab.peca(esquerda) == partida.vulneravelEnPassant) 
+                    {
+                        mat[esquerda.linha, esquerda.coluna] = true;
+                    }
+                    Posicao direita = new Posicao(posicao.linha, posicao.coluna + 1);
+
                 }
 
             }

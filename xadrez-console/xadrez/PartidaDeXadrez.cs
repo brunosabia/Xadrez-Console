@@ -15,7 +15,10 @@ namespace xadrez
         public bool terminada { get; private set; }
 
         private HashSet<Peca> pecas;
+
         private HashSet<Peca> capturadas;
+
+        public Peca vulneravelEnPassant { get; private set; }
 
         public bool xeque { get; private set; }
 
@@ -29,6 +32,7 @@ namespace xadrez
             pecas = new HashSet<Peca>();
             capturadas = new HashSet<Peca>();
             colocarPecas();
+            vulneravelEnPassant = null;
         }
 
         //método que executa o movimento da peca
@@ -138,6 +142,20 @@ namespace xadrez
                 turno++;
                 mudaJogador();
             }
+
+            //JOGADA ESPECIAL EN PASSANT
+            Peca p = tab.peca(destino);
+
+            if(p is Peao && (destino.linha == origem.linha - 2) || destino.linha == origem.linha + 2)
+            {
+                vulneravelEnPassant = p;
+            }
+            else
+            {
+                vulneravelEnPassant = null;
+            }
+                    
+
         }
 
         //metodo para Validar a posição que o usuario digita de Origem
@@ -257,7 +275,7 @@ namespace xadrez
             colocarNovaPeca('b', 1, new Cavalo(tab, Cor.Branca));
             colocarNovaPeca('c', 1, new Bispo(tab, Cor.Branca));
             colocarNovaPeca('d', 1, new Dama(tab, Cor.Branca));
-            colocarNovaPeca('e', 1, new Rei(tab, Cor.Branca,this));
+            colocarNovaPeca('e', 1, new Rei(tab, Cor.Branca, this));
             colocarNovaPeca('f', 1, new Bispo(tab, Cor.Branca));
             colocarNovaPeca('g', 1, new Cavalo(tab, Cor.Branca));
             colocarNovaPeca('h', 1, new Torre(tab, Cor.Branca));
@@ -279,7 +297,7 @@ namespace xadrez
             colocarNovaPeca('b', 8, new Cavalo(tab, Cor.Preta));
             colocarNovaPeca('c', 8, new Bispo(tab, Cor.Preta));
             colocarNovaPeca('d', 8, new Dama(tab, Cor.Preta));
-            colocarNovaPeca('e', 8, new Rei(tab, Cor.Preta,this));
+            colocarNovaPeca('e', 8, new Rei(tab, Cor.Preta, this));
             colocarNovaPeca('f', 8, new Bispo(tab, Cor.Preta));
             colocarNovaPeca('g', 8, new Cavalo(tab, Cor.Preta));
             colocarNovaPeca('h', 8, new Torre(tab, Cor.Preta));
